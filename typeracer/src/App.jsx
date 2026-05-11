@@ -17,8 +17,17 @@ function App() {
     if (!startTime){ // If start time null, this is first letter
       setStartTime(Date.now());
     }
+    if (quote.startsWith(val)){
+      setUserInput(val); // Since use-state, it will trigger re-render
+    }
 
-    setUserInput(val); // Since use-state, it will trigger re-render
+    if (val.length > 5){
+      const now = Date.now();
+      const mins = (now - startTime)/60000;
+      const words = val.length/5;
+      setWPM(Math.round(words/mins))
+
+    }
 
     if(val === quote){
       calculateFinalScore();
@@ -57,7 +66,7 @@ function App() {
         style={{ marginTop: '20px', width: '100%', padding: '10px' }}
       />
 
-      {wpm > 0 && <h2>Great job! Your WPM: {wpm}</h2>}      
+      {wpm > 0 && <h2> WPM: {wpm}</h2>}      
       <button onClick={() => window.location.reload()}>Restart</button>
     </div>
   );
